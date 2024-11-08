@@ -16,7 +16,7 @@ $(document).ready(function () {
             url: '/task',
             data: function (d) {
                 d.status = $('#statusFilter').val();  // Get selected status filter
-                d.search = $('#searchInput').val();  // Get search input value
+                d.search = $('#tasksTable_filter input').val();  // Get search input value
                 d.order_by = $('#orderBy').val();  // Get selected order by field
                 d.direction = $('#orderDirection').val();  // Get selected order direction
             }
@@ -29,7 +29,7 @@ $(document).ready(function () {
         ]
     });
 
-    $('#statusFilter, #searchInput, #orderBy, #orderDirection').on('change keyup', function () {
+    $('#statusFilter, #orderBy, #orderDirection').on('change keyup', function () {
         table.ajax.reload();  // Reload the table data
     });
 

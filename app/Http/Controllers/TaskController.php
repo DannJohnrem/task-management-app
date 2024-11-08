@@ -33,8 +33,9 @@ class TaskController extends Controller
                     $tasks->where('status', $request->status);  // Filter by status
                 }
 
+                // Filter by search query if provided
                 if ($request->filled('search')) {
-                    $tasks->where('title', 'like', '%' . $request->search . '%');  // Filter by search input (title)
+                    $tasks->where('title', 'like', '%' . $request->search . '%');
                 }
 
                 // Apply sorting if order_by and direction are set
