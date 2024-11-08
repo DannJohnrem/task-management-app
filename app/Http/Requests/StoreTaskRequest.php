@@ -11,7 +11,7 @@ class StoreTaskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|max:100|unique:tasks,title,NULL,id,user_id,' . auth()->id(), // Unique per user
+            'content' => 'required',
+            'status' => 'required|in:to-do,in-progress,done',
+            'attachment' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096'
         ];
     }
 }

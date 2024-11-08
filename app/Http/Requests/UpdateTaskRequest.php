@@ -11,7 +11,7 @@ class UpdateTaskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class UpdateTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:100|unique:tasks,title,' . $this->task->id,
+            'content' => 'nullable|string',
+            'status' => 'required|in:to-do,in-progress,done',
+            'is_published' => 'boolean',
+            'image' => 'nullable|image|max:4096',
         ];
     }
 }
