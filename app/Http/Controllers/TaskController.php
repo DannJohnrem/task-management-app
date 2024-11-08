@@ -19,18 +19,16 @@ class TaskController extends Controller
     {
         if ($request->ajax()) {
             try {
-                // Ensure user is authenticated
                 $user = Auth::user();
                 if (!$user) {
                     return response()->json(['error' => 'Unauthorized'], 401);
                 }
 
-                // Start query with the user's tasks
                 $tasks = Task::where('user_id', $user->id);
 
                 // Apply filters if they are set
                 if ($request->filled('status')) {
-                    $tasks->where('status', $request->status);  // Filter by status
+                    $tasks->where('status', $request->status);
                 }
 
                 // Filter by search query if provided
@@ -40,9 +38,8 @@ class TaskController extends Controller
 
                 // Apply sorting if order_by and direction are set
                 if ($request->filled('order_by')) {
-                    $tasks->orderBy($request->order_by, $request->direction ?? 'asc');  // Sort by the column and direction
-                } else {
-                    $tasks->orderBy('created_at', 'desc');  // Default sorting by creation date
+                    $tasks->orderBy($request->order_by, $request->direction ?? 'asc');
+                    $tasks->orderBy('created_at', 'desc');
                 }
 
                 // Get the total count of tasks for pagination
